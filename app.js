@@ -27,7 +27,7 @@ console.log('Cleaning ./img/ and ./vid/ folders');
 rmDir('./img/');
 rmDir('./vid/');
 
-getContent('mediaserver.intelimedia.cl', '/ajax/infoPantalla.jsp?id=0&id_categoria=1&id_instancia=1');
+getContent('mediaserver.intelimedia.cl', '/ajax/infoPantalla.jsp?id=244&id_categoria=19&id_instancia=1');
 
 
 
@@ -149,7 +149,7 @@ function rmDir(dirPath){
 
 				exec_command("curl '"+imgSrc+"' >> ./img/"+imgOutputName+"");
 				console.log('DOWNLOADED: ' + imgSrc);
-				imgArray.push({imgSola: imgOutputName, imgPath : "./img/"+imgOutputName});
+				imgArray.push({originalPath : srcIncomplete, imgSola: imgOutputName, imgPath : "./img/"+imgOutputName});
 			}
 			else{
 				var imgSrcPosInit = srcIncomplete.lastIndexOf("/");
@@ -158,7 +158,7 @@ function rmDir(dirPath){
 				exec_command("curl '"+imgSrc+"' >> "+imgOutputName+"");
 				console.log('DOWNLOADED: ' + imgSrc);
 				var imgSolavar = srcIncomplete.substr(imgSrcPosInit+1);
-				imgArray.push({imgSola: imgSolavar, imgPath : imgOutputName});
+				imgArray.push({originalPath : srcIncomplete, imgSola: imgSolavar, imgPath : imgOutputName});
 			}
 		}
 		// If there is Video, download it
@@ -176,12 +176,27 @@ function rmDir(dirPath){
 		}
 		//Edit HTML Content, to match new local paths for BLOBS
 		var htmlContent = info.contenido;
-		console.log('imgArray:'+JSON.stringify(imgArray, null, 2));
-		console.log('vidArray:'+JSON.stringify(vidArray, null, 2));
+		var newhtmlContent = htmlContent;
+		//Edit Images
+		for(key in imgArray){
+			var originalPath = imgArray[key].originalPath;
+			var imgSola = imgArray[key].imgSola;
+			var imgPath = imgArray[key].imgPath;
+			newhtmlContent = newhtmlContent.replace(originalPath, imgPath);
+		}
+		//Edit Video
+		var vidSolo = vidArray[0].vidSolo;
+		var vidPath = vidArray[0].vidPath;
+		newhtmlContent = newhtmlContent.replace('http://mediaserver.video.intelimedia.cl/'+vidSolo, vidPath);
+		
 
 	}
 
 	function exec_command(command){
 		function puts(error, stdout, stderr) { sys.puts(stdout) }
 		exec(command, puts);
+	}
+
+	function cycleSlides(id, id_categoria){
+		
 	}
