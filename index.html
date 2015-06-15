@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='UTF-8'>
+	<title>Canal Toyota</title>
+	<link href="./css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body style='margin:0px;padding:0px;font-family:mittel'>
+	<div id='divFondo' style='position:fixed;left:0px;top:0px;width:1920px;height:1080px;background:url("./img_fixed/fondo-plantilla_toyota.jpg") no-repeat'></div>
+
+
+	<!-- DIV CONTENIDO - PRINCIPAL -->
+	<div id='divPrincipal' style='position:fixed;left:0px;top:0px;width:1920px;height:1080px;border:1px solid #000'></div>
+
+
+
+	<div id='divBG' style='position:fixed;left:0px;top:0px;width:1920px;height:1080px;border:1px solid #000'></div>
+	
+
+
+	<!-- DIV MARQUEE -->
+	<div id='bandaInfo' class='marquee' style='font-family:Arial;font-size:20px;padding-top:5px;position:fixed;top:1050px;left:0px;width:1920px;height:30px;'></div>
+
+
+
+	<div id='divLogoAgua' style='position:fixed;width:223px;height:42px;left:1650px;top:1000px;background:url("./img_fixed/logo-toyota.png") no-repeat;opacity:0.95'></div>
+
+	<img src="" style='display:none' id='imgPreload'>
+	<input type='hidden' id='IDVIDEO' value=''>
+	<div id='tapaVideo' style='position:fixed;left:0px;top:0px;width:1920px;height:1080px;background-color:#000;display:none'></div>
+
+
+	<script src="./js/jquery-1.11.3.min.js"></script>
+	<script src="./js/jquery.marquee.js"></script>
+	<script src="./js/clientside.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+</body>
+</html>
