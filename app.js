@@ -1,5 +1,11 @@
-var slidesArray = new Array();
+//Global Variables
+slidesCount = 0; //Cant de slides INCLUYENDO la INICIAL id=0, id_categoria=0;
+slidesAcum = 0;
+id = 0;
+id_categoria = 0;
+slidesContentArray = new Array();
 
+//Requires
 var sys = require('sys');
 var exec = require('child_process').exec;
 var fs = require('fs');
@@ -27,8 +33,8 @@ console.log('Cleaning ./img/ and ./vid/ folders');
 rmDir('./img/');
 rmDir('./vid/');
 
-getContent('mediaserver.intelimedia.cl', '/ajax/infoPantalla.jsp?id=244&id_categoria=19&id_instancia=1');
 
+cycleSlides();
 
 
 
@@ -104,6 +110,8 @@ function rmDir(dirPath){
 	}
 
 	function getContent(_hostname, _path){
+		slidesAcum++;
+
 		var options = {
 			hostname: _hostname,
 			path: _path,
@@ -131,6 +139,9 @@ function rmDir(dirPath){
 	}
 
 	function processContent(info){
+		id = info.id;
+		id_categoria = info.id_categoria;
+
 		var imgArray = new Array();
 		var vidArray = new Array();
 
@@ -141,6 +152,7 @@ function rmDir(dirPath){
 			console.log('Downloading Image: ' + imgSrc);
 
 			//Detect JSP or direct IMG
+			//JSP
 			if(imgSrc.search('loadImagen.jsp')!=-1){
 				var imgSrcPosInit = srcIncomplete.lastIndexOf('loadImagen.jsp?a=');
 				imgSrcPosInit = parseInt(imgSrcPosInit+17);
@@ -151,6 +163,7 @@ function rmDir(dirPath){
 				console.log('DOWNLOADED: ' + imgSrc);
 				imgArray.push({originalPath : srcIncomplete, imgSola: imgOutputName, imgPath : "./img/"+imgOutputName});
 			}
+			//Direct Image
 			else{
 				var imgSrcPosInit = srcIncomplete.lastIndexOf("/");
 				var imgOutputName = './img'+srcIncomplete.substr(imgSrcPosInit);
@@ -167,29 +180,59 @@ function rmDir(dirPath){
 			var videoPosFin = info.contenido.lastIndexOf('</div>');
 			var videoSrc = info.contenido.substring(videoPosInit, videoPosFin);
 			console.log('Downloading Video: ' + videoSrc);
-			fileDownload(videoSrc, 'vid');
 
 			var strPos = videoSrc.lastIndexOf("/");
 			var output = './vid'+videoSrc.substr(strPos);
 			var vidSolovar = videoSrc.substr(strPos+1);
+
+			fileDownload(videoSrc, 'vid');
+			// exec_command("curl '"+videoSrc+"' >> ./vid/"+vidSolovar);
+			console.log('DOWNLOADED: ' + videoSrc);
+
+
 			vidArray.push({vidSolo : vidSolovar, vidPath : output});
 		}
 		//Edit HTML Content, to match new local paths for BLOBS
 		var htmlContent = info.contenido;
 		var newhtmlContent = htmlContent;
 		//Edit Images
-		for(key in imgArray){
-			var originalPath = imgArray[key].originalPath;
-			var imgSola = imgArray[key].imgSola;
-			var imgPath = imgArray[key].imgPath;
-			newhtmlContent = newhtmlContent.replace(originalPath, imgPath);
+		if(imgArray.length!=0){
+			for(key in imgArray){
+				var originalPath = imgArray[key].originalPath;
+				var imgSola = imgArray[key].imgSola;
+				var imgPath = imgArray[key].imgPath;
+				newhtmlContent = newhtmlContent.replace(originalPath, imgPath);
+			}
 		}
 		//Edit Video
-		var vidSolo = vidArray[0].vidSolo;
-		var vidPath = vidArray[0].vidPath;
-		newhtmlContent = newhtmlContent.replace('http://mediaserver.video.intelimedia.cl/'+vidSolo, vidPath);
+		if(vidArray.length!=0){
+			for(key in vidArray){
+				var vidSolo = vidArray[key].vidSolo;
+				var vidPath = vidArray[key].vidPath;
+				newhtmlContent = newhtmlContent.replace('http://mediaserver.video.intelimedia.cl/'+vidSolo, vidPath);
+			}
+		}
 		
+		//Add to Global Array with all Slides content
+		slidesContentArray.push(newhtmlContent);
 
+		//Check Cycle
+		console.log('###################################################################');
+		console.log('###################################################################');
+		console.log('##### slidesAcum:'+slidesAcum+' ; slidesCount:'+slidesCount+' #####');
+		console.log('###################################################################');
+		console.log('###################################################################');
+		if(slidesAcum <= slidesCount){
+			getContent('mediaserver.intelimedia.cl', '/ajax/infoPantalla.jsp?id='+id+'&id_categoria='+id_categoria+'&id_instancia=1');
+		}
+		else{
+			console.log('======================= CYCLE FINISHED =======================');
+			console.log('==== slidesContentArray ====:');
+			for(key=0;key<slidesContentArray.length;key++){
+				console.log('Slide: #'+key);
+				console.log(slidesContentArray[key]);
+			}
+		}
 	}
 
 	function exec_command(command){
@@ -197,6 +240,38 @@ function rmDir(dirPath){
 		exec(command, puts);
 	}
 
-	function cycleSlides(id, id_categoria){
-		
+	function cycleSlides(){
+		//First, lets get slidesCount
+		var options = {
+			hostname: 'mediaserver.intelimedia.cl',
+			path: '/ajax/infoPantalla.jsp?id=0&id_categoria=0&id_instancia=1',
+			method: 'GET'
+		};
+
+		var req = http.request(options, function(res) {
+			res.setEncoding('utf8');
+			res.on('data', function (content) {
+				var contenido = JSON.parse(content);
+				var info = contenido.info;
+				//slidesCount GOTTEN!!
+				slidesCount = parseInt(parseInt(info.slidesCount) + 1); //Son realmente 2 porque considera CASO INICIAL (id=0,id_categoria=0) y sgte (id=0, id_categoria=1), pero el cotenido de la ultima fila de la query es IGUAL al caso INICIAL.
+				id = info.id;
+				id_categoria = info.id_categoria;
+				console.log('slidesCount:'+slidesCount+'\nStart Cycle!!\n\n');
+				
+				//Se comienza el ciclo
+				getContent('mediaserver.intelimedia.cl', '/ajax/infoPantalla.jsp?id='+id+'&id_categoria='+id_categoria+'&id_instancia=1');
+
+			});
+		});
+
+		req.on('error', function(e) {
+			console.log('cycleSlides Request Error: ' + e.message);
+			req.end();
+			setTimeout(function(){
+				cycleSlides();
+			},1500)
+		});
+
+		req.end();
 	}
