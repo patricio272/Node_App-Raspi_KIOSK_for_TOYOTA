@@ -64,14 +64,19 @@ $(document).ready(function(){
 
 	
 	video = $('#video');
-	video.on('ended',function(){
-		$("#panelVideo").hide();
-		$('#panelVideo').attr('src', '');
-		startCycle();		
-	});
+	// video.on('ended',function(){
+	// 	$("#panelVideo").hide();
+	// 	$('#panelVideo').attr('src', '');
+	// 	startCycle();		
+	// });
 
 	video.on('play',function(){
-		console.log('Duration Video:'+parseInt(this.duration)*1000);
+		var duracion = parseInt(this.duration)*1000;
+		console.log('Duration Video:'+duracion);
+		var videoP = document.getElementById('video');
+		videoP.pause();
+		socket.emit('startOMX', videoP.src);
+		setTimeout(startCycle, duracion);
 	});
 
 
@@ -89,7 +94,7 @@ $(document).ready(function(){
 			slidesObj.reverse();
 
 			if(slide.esVideo == "1"){
-				$("#panelVideo").show();
+				// $("#panelVideo").show();
 				$('#video').attr('src', slide.contenido);
 			}
 			else{

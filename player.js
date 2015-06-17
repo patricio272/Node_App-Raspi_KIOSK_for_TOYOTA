@@ -3,6 +3,7 @@ resultObj = new Object();
 // slidesContentArray = new Array();
 
 //Requires
+var omx = require('omxcontrol');
 var sys = require('sys');
 var exec = require('child_process').exec;
 var fs = require('fs');
@@ -43,12 +44,20 @@ socket.on('getMarquee', function(){
 	getMarquee(socket);
 });
 
+socket.on('startOMX', function(video){
+	omx.start(video);
+});
+
 socket.on('disconnect', function () {
 	console.log('Disconnected Client: '+socket.id);
+	exec_command("echo key F5 | xte");
 });
 });
 
-
+function exec_command(command){
+	function puts(error, stdout, stderr) { sys.puts(stdout) }
+	exec(command, puts);
+}
 
 function startCycle(socket){
 	socket.emit('slide', resultObj);
