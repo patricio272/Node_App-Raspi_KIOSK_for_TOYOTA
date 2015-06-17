@@ -1,0 +1,79 @@
+[
+  {
+    "esSplashScreen": "1",
+    "slidesCount": 13,
+    "esVideo": "0",
+    "tiempo": "5000",
+    "contenido": "<div style='font-size:150px;color:#970000;text-align:center;position:fixed;top:540px;height:302px;margin-top:-151px;line-height:302px;width:1920px'><img src='./img/eventos.png' border='0' style='vertical-align:middle;margin-top:-20px' > Eventos</div>"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "120000",
+    "contenido": "./vid/09b69adcd7cbae914c6204984097d2da.MP4"
+  },
+  {
+    "esVideo": "0",
+    "tiempo": "5000",
+    "contenido": "<div style='font-size:150px;color:#000;text-align:center;position:fixed;top:540px;height:302px;margin-top:-151px;line-height:302px;width:1920px'><img src='./img/toyota.png' border='0' style='vertical-align:middle;margin-top:-20px' > Toyota</div>"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/bb073f2855d769be5bf191f6378f7150.MP4"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/e27a949795bbe863f31c3b79a2686770.MP4"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/ae1d2c2d957a01dcb3f3b39685cdb4fa.MP4"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/03255088ed63354a54e0e5ed957e9008.MP4"
+  },
+  {
+    "esVideo": "0",
+    "tiempo": "5000",
+    "contenido": "<div style='font-size:150px;color:#970000;text-align:center;position:fixed;top:540px;height:302px;margin-top:-151px;line-height:302px;width:1920px'><img src='./img/eventos.png' border='0' style='vertical-align:middle;margin-top:-20px' > Eventos</div>"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/f3ac63c91272f19ce97c7397825cc15f.MP4"
+  },
+  {
+    "esVideo": "0",
+    "tiempo": "5000",
+    "contenido": "<div style='font-size:150px;color:#000;text-align:center;position:fixed;top:540px;height:302px;margin-top:-151px;line-height:302px;width:1920px'><img src='./img/toyota.png' border='0' style='vertical-align:middle;margin-top:-20px' > Toyota</div>"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/868b7df964b1af24c8c0a9e43a330c6a.MP4"
+  },
+  {
+    "esVideo": "1",
+    "tiempo": "5000",
+    "contenido": "./vid/ed57844fa5e051809ead5aa7e3e1d555.MP4"
+  },
+  {
+    "esVideo": "0",
+    "tiempo": "5000",
+    "contenido": "<div style='font-size:150px;color:#fff;text-align:center;position:fixed;top:540px;height:302px;margin-top:-151px;line-height:302px;width:1920px'><img src='./img/noticias.png' border='0' style='vertical-align:middle;margin-top:-20px' > Noticias</div>"
+  },
+  {
+    "esVideo": "0",
+    "tiempo": "30000",
+    "contenido": "<div style='position:fixed;left:10px;top:-10px;width:1900px;font-size:70px;color:#444'>UNIFORME INVIERNO 2015 - TRANSPORTES</div><div style='position:fixed;left:0px;top:0px;width:0px;font-size:0px;color:#444'>RECURSOS HUMANOS</div><div style='position:fixed;left:0px;top:0px;width:0px;font-size:0px;color:#444'>...</div><div style='position:fixed;left:10px;top:80px;width:1900px;height:980px;opacity:1;border-top: 8px #fff solid;'><img src='./img/195e9934265171b83786fb462be78085.JPG' width='1900px' height='980px' border='0'></div><div style='font-size:100px;color:#fff;text-align:left;position:fixed;top:-1000px;left:70px;height:150px;line-height:150px;'><img src='./img/noticias.png' border='0' width='150px' height='150px' style='vertical-align:middle;margin-top:-20px' > Noticias</div>"
+  },
+  {
+    "esVideo": "0",
+    "tiempo": "5000",
+    "contenido": "<div style='font-size:150px;color:#000;text-align:center;position:fixed;top:540px;height:302px;margin-top:-151px;line-height:302px;width:1920px'><img src='./img/toyota.png' border='0' style='vertical-align:middle;margin-top:-20px' > Toyota</div>"
+  }
+]
